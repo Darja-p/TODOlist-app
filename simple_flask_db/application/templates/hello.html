@@ -1,18 +1,22 @@
-<!doctype html>
-<head>
-    <title>Hello!</title>
-</head>
-<body>
-  <h1>Hello {{ user or 'unknown person' }}!</h1>
+
+{% extends "layout.html" %}
+{% block content %}
   <p>This is a TODO list for you.</p>
-  <p> You can :</p>.</p>
-<ul>
-  <li>add tasks (one at a time)</li>
-  <li>delete task by id</li>
-  <li>change description or due date of the task</li>
+  <p> You can :</p>
+
+  <div class="border-top pt-3">
+        <small class = "text-muted">
+          <ul>
+            <li><a class="ml-2" href="{{ url_for('todos_api.create_task') }}">add tasks (one at a time)</a></li>
+            <li>delete task by id</li>
+            <li>change description or due date of the task</li>
+</ul>
+
+        </small>
+    </div>
+
   <h3> Here are current tasks:</h3>
   {% for task in tasks %}
   <p>{{task.id}}. - {{task.description}} to be done by {{task.due_date.strftime("%b %d %Y")}} </p>
   {% endfor %}
-</ul>
-</body>
+{% endblock content %}

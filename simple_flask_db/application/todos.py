@@ -1,22 +1,28 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, render_template, flash
 
 from . import db
 from .models import TODOS
+from .Forms import InsertingTask
 
 TodosApi = Blueprint('todos_api', __name__)
 
 
-@TodosApi.route('/create', methods=['POST'])
+@TodosApi.route('/create', methods=['GET','POST'])
 def create_task():
-
-    try:
-        task = TODOS.from_dict(request.json)
-    except KeyError as e:
-        return jsonify(f'Missing key: {e.args[0]}'), 400
-
-    db.session.add(task)
-    db.session.commit()
-    return jsonify(), 200
+    form = InsertingTask()
+    if form.validate_on_submit():
+        task = TODOS (description=form.description.data , due_date=form.due_date.data )
+        db.session.add (task)
+        db.session.commit()
+        flash("your task was added")
+    return render_template('adding_task.html',form=form)
+        # task = TODOS.from_dict(request.json)
+    # except KeyError as e:
+    #     return jsonify(f'Missing key: {e.args[0]}'), 400
+    #
+    # db.session.add(task)
+    # db.session.commit()
+    # return jsonify(), 200
 
 
 @TodosApi.route('/<due_date>', methods = ['GET'])

@@ -5,7 +5,7 @@ class Config(object):
     DEBUG = False
     TESTING = False
     CSRF_ENABLED = True
-    SECRET_KEY = '12345'
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
     
     # sqlite
     # SQLALCHEMY_DATABASE_URI = 'sqlite:///test.db'

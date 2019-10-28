@@ -1,5 +1,4 @@
 from . import db
-import datetime
 
 
 class TODOS(db.Model):
@@ -12,7 +11,7 @@ class TODOS(db.Model):
                          index=False,
                          unique=True,
                          nullable=False)
-    due_date = db.Column(db.DateTime, default=(datetime.datetime.now() + datetime.timedelta(days=1)))
+    due_date = db.Column(db.DateTime) #default=(datetime.datetime.now() + datetime.timedelta(days=1))
 
 
     @staticmethod
